@@ -32,4 +32,24 @@ Node 中的对象
 
         stdin       获取用户的键盘输入
 
-        cwd
+            .setEncoding("utf-8")       设置字符集
+
+            .on( "data"/"readable", function (data){})
+
+        cwd         执行 node 命令的时候 所在目录 ( current working dir)
+
+        on      事件
+
+            exit        退出
+
+            SIGINT      signal interrupted
+
+        argv        附加在命令行的参数  在命令行生效
+
+            node process_argv.js argments( 利用空格分割)
+
+
+2. 模块和包
+
+    require()  ./   代表当前目录
+    exports         导出该属性
