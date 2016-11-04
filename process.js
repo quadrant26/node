@@ -4,9 +4,9 @@
 // process.stdout -> standard output
 // process.stderr -> standard error
 
-process.stdout.write("This is stdout");
+process.stdout.write("This is stdout \n");
 
-process.stderr.write("This is stderr");
+process.stderr.write("This is stderr \n");
 
 process.stdin.setEncoding("utf-8");
 
@@ -19,4 +19,13 @@ process.stdin.setEncoding("utf-8");
 //     console.log(data);
 // })
 
-console.log(process.cwd())
+// console.log(process.cwd())
+
+process.on("exit", function (){
+    console.log("programe will exit...")
+})
+
+process.on("SIGINT", function (){
+    console.log("process has a sigint...")
+    process.exit()
+})
