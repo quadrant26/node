@@ -54,3 +54,31 @@ Node 中的对象
     require()  ./   代表当前目录
 
     exports         导出该属性
+
+    fs 模块
+
+        fs.readFile(filename, callback(err, data))
+
+        var file = fs.readFileSync(filename, Unicode)
+
+    path 模块
+
+        path.sep()
+
+        path.extname()          扩展名
+
+3. server ajax
+
+    var http = require("http")
+
+    var url = require("url")
+
+    url.parse(request.url)
+
+    var http.createServer(function (request, response){ response.end()})
+
+    server.listen(port, ip)
+
+
+
+
