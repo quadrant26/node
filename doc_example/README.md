@@ -36,11 +36,13 @@ node + mongodb 建站
 
     - localhost:3000
 
-    - localhost:3000/movie/1
+    - localhost:3000/movie/{id}
 
     - localhsot:3000/admin/movie
 
     - localhost:3000/admin/list
+
+    - localhost:3000/admin/update/id
 
 4. 样式开发
 
@@ -142,3 +144,27 @@ node + mongodb 建站
             - movie.js
 
         - app.js
+
+9. 数据 mongodb
+
+    mongo
+
+    use dbname
+
+    db.movies.find({})
+
+    db.movies.find({}).count()
+
+    db.movies.remove()
+
+10. bower 安装模块到指定的目录
+
+    在项目根下创建一个名为.bowerrc 的文件然后
+
+    {
+      "directory" : "public/components"
+    }
+
+11. 前端配置文件 bower init
+
+12. 后端配置文件 npm init
