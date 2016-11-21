@@ -7,6 +7,7 @@ var path = require("path")
 // 导入数据库模块
 var mongoose = require("mongoose")
 var Movie = require("./models/movie")
+var User = require("./models/user")
 var _ = require("underscore")
 
 // 设置端口号
@@ -52,43 +53,80 @@ app.get('/', function (req, res){
             movies : movies
         })
     })
+})
 
-    /*res.render('index', {
-        title : 'imooc 首页',
-        movies : [
-            {
-                title:'机械战警',
-                _id : 1,
-                poster : 'http://www.cinema.com.cn/upload/2014-02/14021817016385.jpg'
-            },
-            {
-                title:'机械战警',
-                _id : 2,
-                poster : 'http://www.cinema.com.cn/upload/2014-02/14021817016385.jpg'
-            },
-            {
-                title:'机械战警',
-                _id : 3,
-                poster : 'http://www.cinema.com.cn/upload/2014-02/14021817016385.jpg'
-            },
-            {
-                title:'机械战警',
-                _id : 4,
-                poster : 'http://www.cinema.com.cn/upload/2014-02/14021817016385.jpg'
-            },
-            {
-                title:'机械战警',
-                _id : 5,
-                poster : 'http://www.cinema.com.cn/upload/2014-02/14021817016385.jpg'
-            },
-            {
-                title:'机械战警',
-                _id : 6,
-                poster : 'http://www.cinema.com.cn/upload/2014-02/14021817016385.jpg'
+// signup
+app.post('/user/signup', function (req, res){
+    var _user = req.body.user;
+    var user = new User(_user)
+
+    // 判断用户名是否存在
+    User.findOne({name : _user.name}, function (err, user){
+        if(err){
+            console.log(err)
+        }
+        // 已经存在
+        if(user){
+            return res.redirect('/')
+        }else{ // 用户名不存在
+            user.save(function (err, user){
+                if(err){
+                    console.log(err)
+                }
+                res.redirect("/admin/userlist")
+                console.log(user)
+            })
+        }
+    });
+
+})
+
+// signin
+// signup
+app.post('/user/signin', function (req, res){
+    var _user = req.body.user;
+    var name = _user.name
+    var password = _user.password
+
+
+    // 判断用户名是否存在
+    User.findOne({name : name}, function (err, user){
+        if(err){
+            console.log(err)
+        }
+        // 用户不存在
+        if(!user){
+            return res.redirect('/')
+        }
+
+        user.comparePassword(password, function (err, isMatch){
+            if(err){
+                console.log(err)
             }
 
-        ]
-    })*/
+            if(isMatch){
+                return res.redirect('/')
+            }else{
+                console.log('Password is not matched');
+            }
+        });
+    });
+
+})
+
+// 加载 userlist page
+app.get('/admin/userlist', function (req, res){
+
+    Movie.fetch(function (err, movies){
+        if(err){
+            console.log(err)
+        }
+
+        res.render('userlist', {
+            title : 'imooc 用户列表页',
+            movies : movies
+        })
+    })
 })
 
 //加载 detail page
@@ -105,20 +143,6 @@ app.get('/movie/:id', function (req, res){
             movie : movie
         })
     })
-
-    /*res.render('detail', {
-        title : 'imooc 详情页',
-        movie : {
-            doctor : '何塞·帕迪里亚',
-            country : 'USA',
-            title : '机械战警',
-            year : 2014,
-            poster : 'http://www.cinema.com.cn/upload/2014-02/14021817016385.jpg',
-            language : '英语',
-            flash : 'http://js.kankan.com/player/mp4/KKPlayer2.2.swf?v=5.6&popup=1',
-            summary : '2028年，专事军火开发的机器人公司Omni Corp生产了大量装备精良的机械战警，他们被投入到维和和惩治犯罪等行动中，取得显著的效果。罪犯横行的底特律市，嫉恶如仇、正义感十足的警察亚历克斯·墨菲（乔尔·金纳曼饰）遭到仇家暗算，身体受到毁灭性破坏。借助于Omni公司天才博士丹尼特·诺顿（加里·奥德曼饰）最前沿的技术，墨菲以机械战警的形态复活。数轮严格的测试表明，墨菲足以承担起维护社会治安的重任，他的口碑在民众中直线飙升，而墨菲的妻子克拉拉（艾比·考尼什饰）和儿子大卫却再难从他身上感觉亲人的温暖。感知到妻儿的痛苦，墨菲决心向策划杀害自己的犯罪头子展开反击。'
-        }
-    })*/
 })
 
 //加载 admin page
@@ -212,23 +236,6 @@ app.get('/admin/list', function (req, res){
             movies : movies
         })
     })
-
-    /*res.render('list', {
-        title : 'imooc 列表页',
-        movies : [
-            {
-                title:'机械战警',
-                _id : 1,
-                doctor : '何塞·帕迪里亚',
-                country : 'USA',
-                flash : 'http://player.youku.com/player.php/sid/XNjA1Njc0NTUy/v.swf ',
-                summary : '2028年，专事军火开发的机器人公司Omni Corp生产了大量装备精良的机械战警，他们被投入到维和和惩治犯罪等行动中，取得显著的效果。罪犯横行的底特律市，嫉恶如仇、正义感十足的警察亚历克斯·墨菲（乔尔·金纳曼饰）遭到仇家暗算，身体受到毁灭性破坏。借助于Omni公司天才博士丹尼特·诺顿（加里·奥德曼饰）最前沿的技术，墨菲以机械战警的形态复活。数轮严格的测试表明，墨菲足以承担起维护社会治安的重任，他的口碑在民众中直线飙升，而墨菲的妻子克拉拉（艾比·考尼什饰）和儿子大卫却再难从他身上感觉亲人的温暖。感知到妻儿的痛苦，墨菲决心向策划杀害自己的犯罪头子展开反击。',
-                poster : 'http://www.cinema.com.cn/upload/2014-02/14021817016385.jpg',
-                year : '2012',
-                language : '英语'
-            }
-        ]
-    })*/
 })
 
 // 删除一条数据
