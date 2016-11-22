@@ -24,7 +24,7 @@ module.exports = function (grunt){
         },
 
         nodemon : {
-            development : {
+            dev : {
                 options : {
                     file : 'app.js',
                     args : [],
@@ -43,13 +43,10 @@ module.exports = function (grunt){
 
         concurrent : {
             tasks : ['nodemon', 'watch'],
-
-        },
-
-        options : {
-            logConcurrentOutput : true
+            options : {
+                logConcurrentOutput : true
+            }
         }
-
     })
 
     grunt.loadNpmTasks('grunt-contrib-watch')
