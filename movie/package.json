@@ -13,15 +13,19 @@
     "grunt": "^1.0.1",
     "grunt-concurrent": "^2.3.1",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-nodemon": "^0.4.2",
     "jade": "^1.11.0",
     "moment": "^2.16.0",
-    "mongoose": "^4.6.7",
+    "mongoose": "^4.6.8",
     "morgan": "^1.7.0",
+    "node-gyp": "^3.4.0",
     "serve-static": "^1.11.1",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "escape-html": "^1.0.3"
+    "escape-html": "^1.0.3",
+    "express": "^4.14.0",
+    "moment": "^2.17.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
