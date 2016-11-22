@@ -1,9 +1,7 @@
 extends ../layout
 
 block content
-
-.container
-    .row
+    .container
         .col-md-5
             form(method="POST", action="user/signup")
                 .modal-body 注册
@@ -13,7 +11,6 @@ block content
                     .form-group
                         label(for="signupPassword") 密码
                         input#signupPassword.form-control(name="user[name]", type="password")
-                    .modal-footer
-                        button.btn.btn-default(type="button", data-dismiss="modal") 关闭
-                        button.btn.btn-success(type="submit") 提交
-    #signinModal.modal.fade
+                .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") 关闭
+                    button.btn.btn-success(type="submit") 提交
