@@ -33,6 +33,7 @@ UserSchema.pre('save', function(next){
         this.meta.updateAt = Date.now()
     }
 
+    /*
     bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt){
         if(err)return next(err)
 
@@ -43,8 +44,14 @@ UserSchema.pre('save', function(next){
             next()
         })
     })
-
-    // next()
+    */
+    bcrypt.hash(user.password, null, null, function (err, hash){
+        if (err) {
+            return next(err)
+        }
+        user.password = hash
+        next()
+    })
 })
 
 UserSchema.methods = {
@@ -56,6 +63,13 @@ UserSchema.methods = {
         })
     }
 }
+/*UserSchema.methods = {
+    comparePassword: function (_password, cb) {
+        var hash = this.password;
+        var isMatch = bcrypt.compareSync(_password, hash);
+        cb(null, isMatch);
+    }
+};*/
 
 UserSchema.statics = {
     // 取出数据库所有数据
