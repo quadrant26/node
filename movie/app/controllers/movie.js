@@ -81,6 +81,7 @@ exports.update = function (req, res){
 
 //加载 admin page
 exports.save = function (req, res){
+    console.log(123)
     res.render('admin', {
         title : 'imooc 后台录入页',
         movie : {
