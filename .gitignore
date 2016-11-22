@@ -38,3 +38,6 @@ jspm_packages
 
 # ignore
 movie/node_modules/*
+
+# idea
+.idea/*
