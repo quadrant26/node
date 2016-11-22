@@ -15,7 +15,7 @@ exports.detail = function (req, res){
         }
 
         res.render('detail', {
-            title : 'imooc' + movie.title,
+            title : 'imooc 详细' + movie.title,
             movie : movie
         })
     })
@@ -81,7 +81,6 @@ exports.update = function (req, res){
 
 //加载 admin page
 exports.save = function (req, res){
-
     res.render('admin', {
         title : 'imooc 后台录入页',
         movie : {
