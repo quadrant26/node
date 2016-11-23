@@ -6,7 +6,7 @@ $(function(){
 
     $(".comment").click(function (e){
 
-        var target = $(e.target)
+        var target = $(this)
         var toId = target.data('tid')
         var commentId = target.data('cid')
 
@@ -46,5 +46,41 @@ $(function(){
             }).appendTo("#commentForm")
         }
     })
+
+    /*
+    $("#submit_comment").on('click', function (){
+
+        console.log($("#commentForm").is("#toId"))
+        console.log($("#toId").val())
+
+        if( $("#toId").val() != "" && $("#commentId").val() != ""){
+
+            $.ajax({
+                type : 'post',
+                url : "/user/comment",
+                data : {},
+                success : function (data){
+
+                }
+            })
+        }else{
+            console.log($("textarea[name='comment[content]']").text())
+            $.ajax({
+                type : 'post',
+                url : "/user/comment",
+                data : {
+                    "content" : $("textarea[name='comment[content]']").text()
+                },
+                success : function (data){
+                    console.log(data)
+                }
+            })
+        }
+    })
+    */
+    /*function getcomments(){
+        alert(123)
+        return false
+    }*/
 
 })
