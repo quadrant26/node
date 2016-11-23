@@ -10,7 +10,7 @@
             a.navbar-brand(href="/") 重度科幻迷
         if user
             p.navbar-text.navbar-right
-                span 欢迎您，#{user.name}
+                span 欢迎您, #{user.name}
                 span &nbsp; | &nbsp;
                 a.navbar-link(href="/logout") 登出
         else
@@ -22,7 +22,7 @@
 #signupModal.modal.fade
     .modal-dialog
         .modal-content
-            form(method="POST", action="user/signup")
+            form(method="POST", action="/user/signup")
                 .modal-header 注册
                 .modal-body
                     .form-group
@@ -30,14 +30,14 @@
                         input#signupName.form-control(name="user[name]", type="text")
                     .form-group
                         label(for="signupPassword") 密码
-                        input#signupPassword.form-control(name="user[name]", type="password")
+                        input#signupPassword.form-control(name="user[password]", type="text")
                     .modal-footer
                         button.btn.btn-default(type="button", data-dismiss="modal") 关闭
                         button.btn.btn-success(type="submit") 提交
 #signinModal.modal.fade
     .modal-dialog
         .modal-content
-            form(method="POST", action="user/signin")
+            form(method="POST", action="/user/signin")
                 .modal-header 登录
                 .modal-body
                     .form-group
@@ -45,7 +45,7 @@
                         input#signinName.form-control(name="user[name]", type="text")
                     .form-group
                         label(for="signinPassword") 密码
-                        input#signinPassword.form-control(name="user[name]", type="password")
+                        input#signinPassword.form-control(name="user[password]", type="text")
                     .modal-footer
                         button.btn.btn-default(type="button", data-dismiss="modal") 关闭
                         button.btn.btn-success(type="submit") 提交
