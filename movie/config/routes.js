@@ -30,7 +30,7 @@ module.exports = function (app){
     app.get('/logout', User.logout)
     // 加载 userlist page
     //app.get('/admin/userlist', User.list())
-    app.get('/admin/userlist', User.signinRequired, User.adminRequired, User.list)
+    app.get('/admin/user/list', User.signinRequired, User.adminRequired, User.list)
 
     //加载 detail page
     app.get('/movie/:id', Movie.detail)
