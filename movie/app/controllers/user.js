@@ -6,7 +6,7 @@ var User = require("../models/user")
 
 // 注册页面
 exports.showSignup = function (req, res){
-    console.log(req);
+
     res.render('signup', {
         title : '注册页面'
     })
@@ -19,7 +19,6 @@ exports.showSignin = function (req, res){
 // signup
 exports.signup = function (req, res){
     var _user = req.body.user;
-    //var user = new User(_user)
 
     // 判断用户名是否存在
     User.findOne({name : _user.name}, function (err, user){
@@ -28,14 +27,14 @@ exports.signup = function (req, res){
         }
         // 已经存在
         if(user){
-            return res.redirect('/')
+            return res.redirect('/signin')
         }else{ // 用户名不存在
+	    user = new User(_user)
             user.save(function (err, user){
                 if(err){
                     console.log(err)
                 }
-                res.redirect("/admin/userlist")
-                console.log(user)
+                res.redirect("/")
             })
         }
     });
@@ -80,16 +79,16 @@ exports.signin = function (req, res){
 exports.logout = function (req, res){
 
     delete req.session.user
-    delete req.locals.user
+    // delete req.locals.user
 
-    res.redirct('/')
+    res.redirect('/')
 }
 
 
 // 加载 userlist page
 exports.list = function (req, res){
-    var user = req.session.user
-    User.fetch(function (err, movies){
+    // var user = req.session.user
+    User.fetch(function (err, users){
         if(err){
             console.log(err)
         }
@@ -103,7 +102,7 @@ exports.list = function (req, res){
 // 普通用户
 exports.signinRequired = function (req, res, next){
     var user = req.session.user
-    if(user){
+    if(!user){
         return res.redirect("/signin")
     }
     next()
@@ -111,7 +110,8 @@ exports.signinRequired = function (req, res, next){
 // 管理员
 exports.adminRequired = function (req, res, next){
     var user = req.session.user
-    if(user <= 10 ){
+    console.log(user.role)
+    if(user.role <= 10 ){
         return res.redirect("/signin")
     }
     next()
