@@ -23,7 +23,6 @@ app.use(serveStatic(path.join(__dirname, 'public')))
 
 var morgan = require('morgan');
 
-
 var Movie = require("./app/models/movie")
 var User = require("./app/models/user")
 var _ = require("underscore")
