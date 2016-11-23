@@ -33,7 +33,7 @@ block content
                                                         p #{reply.content}
                                     hr
                         #comments
-                        form#commentForm(method="POST", action="/user/comment" onsubmit="return getcomments()")
+                        form#commentForm(method="POST", action="/user/comment")
                             input(type="hidden", name="comment[movie]", value="#{movie._id}")
                             each i in user
                                 span #{i._id}
