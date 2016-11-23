@@ -40,5 +40,10 @@ node + mongodb 建站
 
         /admin/user/list            管理员列表页( 需要 role 大于10 才能进入 )
 
+4.用户登录后评论功能
+
+    添加用户登录评论
+
+        comment
 
 
