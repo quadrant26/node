@@ -11,16 +11,21 @@ exports.save = function (req, res){
 
     var _comment = req.body.comment
     var movieId = _comment.movie
+    console.log(_comment)
 
     if(_comment.cid){
         // 引用别的评论内容进行回复
         Comment.findById(_comment.cid, function (err, comment){
+            if(err){
+                console.log(err)
+            }
+
             var reply = {
                 from : _comment.from,
                 to : _comment.tid,
                 content : _comment.content
             }
-            console.log(comment.reply);
+
             comment.reply.push(reply)
             comment.save(function(err, comment){
                 if(err){
