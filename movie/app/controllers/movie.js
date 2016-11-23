@@ -3,11 +3,42 @@
  */
 
 var Movie = require("../models/movie")
+var Comment = require("../models/comment")
 var _ = require("underscore")
 
 //加载 detail page
 exports.detail = function (req, res){
 
+    var id = req.params.id
+
+     Movie.findById(id, function (err, movie){
+         Comment
+            .find({movie:id})
+            .populate('from', 'name')
+            .populate('reply.from reply.to', 'name')
+            .exec(function (err, comments){
+                 // console.log(comments)
+                 res.render('detail', {
+                     title : 'iMooc 详情页',
+                     movie : movie,
+                     comments : comments
+                })
+         })
+     })
+
+    /*
+    Movie.findById(id, function (err, movie){
+        Comment.find({movie:id}, function (err, comments){
+            console.log(comments)
+            res.render('detail', {
+                title : 'iMooc 详情页',
+                movie : movie,
+                comments : comments
+            })
+        })
+    })
+    */
+    /*
     var id = req.params.id
     Movie.findById(id, function (err, movie){
         if(err){
@@ -19,6 +50,7 @@ exports.detail = function (req, res){
             movie : movie
         })
     })
+    */
 }
 
 // 从表单提交的数据 admin post movie
