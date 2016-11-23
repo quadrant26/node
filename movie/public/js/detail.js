@@ -47,40 +47,47 @@ $(function(){
         }
     })
 
-    /*
-    $("#submit_comment").on('click', function (){
 
-        console.log($("#commentForm").is("#toId"))
-        console.log($("#toId").val())
+    /*$("#submit_comment").on('click', function (){
 
-        if( $("#toId").val() != "" && $("#commentId").val() != ""){
+        var content = $('textarea[name="comment[content]"]').val()
+        var movie = $('input[name="comment[movie]"]').val()
+        var from = $('input[name="comment[from]"]').val()
 
-            $.ajax({
-                type : 'post',
-                url : "/user/comment",
-                data : {},
-                success : function (data){
+        console.log(content, movie, from)
 
-                }
-            })
-        }else{
-            console.log($("textarea[name='comment[content]']").text())
+        if( $("#toId").is() && $("#commentId").is() ){
+            alert(123)
             $.ajax({
                 type : 'post',
                 url : "/user/comment",
                 data : {
-                    "content" : $("textarea[name='comment[content]']").text()
+                    "movie" : movie,
+                    "content" : content,
+                    "from" : from
                 },
                 success : function (data){
                     console.log(data)
                 }
             })
+        }else{
+
+            $.ajax({
+                type : 'post',
+                url : "/user/comment",
+                data : {
+                    "movie" : movie,
+                    "content" : content,
+                    "from" : from
+                },
+                success : function (data){
+                    console.log(data)
+                },
+                error : function (err){
+                    console.log(err)
+                }
+            })
         }
-    })
-    */
-    /*function getcomments(){
-        alert(123)
-        return false
-    }*/
+    })*/
 
 })
