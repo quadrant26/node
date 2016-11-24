@@ -3,6 +3,7 @@
  */
 
 var Movie = require("../models/movie")
+var Category = require("../models/category")
 var Comment = require("../models/comment")
 var _ = require("underscore")
 
@@ -25,42 +26,46 @@ exports.detail = function (req, res){
                 })
          })
      })
-
-    /*
-    Movie.findById(id, function (err, movie){
-        Comment.find({movie:id}, function (err, comments){
-            console.log(comments)
-            res.render('detail', {
-                title : 'iMooc 详情页',
-                movie : movie,
-                comments : comments
-            })
-        })
-    })
-    */
-    /*
-    var id = req.params.id
-    Movie.findById(id, function (err, movie){
-        if(err){
-            console.log(err)
-        }
-
-        res.render('detail', {
-            title : 'imooc 详细' + movie.title,
-            movie : movie
-        })
-    })
-    */
 }
 
 // 从表单提交的数据 admin post movie
 exports.new = function (req, res){
 
-    var id = req.body.movie._id
-    var movieObj = req.body.movie
-    var _movie;
+    Category.find({}, function (err, categories){
+        res.render('admin', {
+            title : 'imooc 后台录入页',
+            categories : categories,
+            movie : {}
+        })
+    })
+}
 
-    if(id !== 'undefined' && id !== "" && id !== null){
+// admin update movie
+exports.update = function (req, res){
+
+    var id = req.params.id
+    if(id){
+        Movie.findById(id, function (err, movie){
+            Category.findById(id, function (err, categories){
+                res.render('admin', {
+                    title : 'imooc 后台更新页',
+                    movie : movie,
+                    categories : categories
+                })
+            })
+        })
+    }
+}
+
+//加载 admin page
+exports.save = function (req, res){
+    console.log('movies 62', req.body)
+
+    /*var movieObj = req.body.movie
+    var _movie
+    console.log(movieObj);
+
+    if(id){
         Movie.findById(id, function (err, movie){
             if(err){
                 console.log(err)
@@ -75,45 +80,47 @@ exports.new = function (req, res){
                 res.redirect('/movie/' + movie._id)
             })
         })
-    }else{
-        _movie = new Movie({
-            doctor : movieObj.doctor,
-            title : movieObj.title,
-            country : movieObj.country,
-            language : movieObj.language,
-            poster : movieObj.poster,
-            year : movieObj.year,
-            summary : movieObj.summary,
-            flash : movieObj.flash
-        })
+    }
+    else{
+        _movie = new Movie(movieObj)
+
+        var categoryId = movieObj.category
+        var categoryName = movieObj.categoryName
 
         _movie.save(function (err, movie){
             if(err){
                 console.log(err)
             }
 
-            res.redirect('/movie/' + movie._id)
+            if( categoryId ){
+                Category.findById(categoryId, function (err, category){
+                    category.movies.push(movie._id)
+
+                    category.save(function (err, category){
+                        res.redirect('/movie/' + movie._id)
+                    })
+                })
+            }
+            else if( categoryName ){
+                var category = new Category({
+                    name : categoryName,
+                    movies : [movie._id]
+                })
+
+                category.save(function (err, category){
+                    movie.category = category._id
+                    movie.save(function (err, movie){
+                        res.redirect('/movie/' + movie._id)
+                    })
+
+                })
+            }
+
+
         })
     }
-}
+    */
 
-// admin update movie
-exports.update = function (req, res){
-    var id = req.params.id
-
-    if(id){
-        Movie.findById(id, function (err, movie){
-            res.render('admin', {
-                title : 'imooc 后台更新页',
-                movie : movie
-            })
-        })
-    }
-}
-
-//加载 admin page
-exports.save = function (req, res){
-    console.log(123)
     res.render('admin', {
         title : 'imooc 后台录入页',
         movie : {
@@ -133,7 +140,10 @@ exports.save = function (req, res){
 //加载 list page
 exports.list = function (req, res){
 
-    Movie.fetch(function (err, movies){
+    Movie
+        .find({})
+        .populate('category', 'name')
+        .exec(function (err, movies){
         if(err){
             console.log(err)
         }
