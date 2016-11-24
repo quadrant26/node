@@ -46,4 +46,12 @@ node + mongodb 建站
 
         comment
 
+5. 电影类别选择
+
+    /admin/category/new         录入新的类别
+
+    /admin/category/list        查看电影类别
+
+    /results                    根据关键字返回搜索结果
+
 
