@@ -35,13 +35,14 @@ $(function(){
                 crossDomain : true,
                 jsonp : 'callback',
                 success : function (data){
-                    $('inputTitle').val(data.title)
-                    $('inputDoctor').val(data.directors[0].name)
-                    $('inputCountry').val(data.countries[0])
-                    $('inputLanguage').val("")
-                    $('inputPoster').val(data.images.large)
-                    $('inputYear').val(data.year)
-                    $('inputSummary').val(data.summary)
+                    $('#inputTitle').val(data.title)
+                    $('#inputDoctor').val(data.directors[0].name)
+                    $('#inputCountry').val(data.countries[0])
+                    $('#inputLanguage').val("")
+                    $('#inputPoster').val(data.images.large)
+                    $('#inputYear').val(data.year)
+                    $('#inputSummary').val(data.summary)
+                    console.log(123)
                 }
             })
         }
